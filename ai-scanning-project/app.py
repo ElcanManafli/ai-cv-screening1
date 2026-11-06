@@ -14,7 +14,7 @@ import streamlit as st
 from pypdf import PdfReader
 from streamlit.errors import StreamlitSecretNotFoundError
 st.set_page_config(
-    page_title="TechConnect - AI CV Screener", page_icon="🚀", layout="wide"
+    page_title="TechConnect - AI CV Screener", page_icon="🚀", layout="wide"
 )
 
 # CSS dizayn
