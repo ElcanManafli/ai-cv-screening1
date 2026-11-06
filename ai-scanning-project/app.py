@@ -14,8 +14,25 @@ import streamlit as st
 from pypdf import PdfReader
 from streamlit.errors import StreamlitSecretNotFoundError
 
+# --- 1. SƏHİFƏNİN KONFİQURASİYASI VƏ DİZAYNI (Tək və doğru yer) ---
+st.set_page_config(
+    page_title="TechConnect - AI CV Screening & Offer Studio",
+    page_icon="🚀",
+    layout="wide",
+)
 
-MODEL = "gemini-3.5-flash-lite"
+# CSS dizayn
+st.markdown(
+    """
+    <style>
+    h1, h2, h3 { font-family: 'Inter', sans-serif; }
+    .metric-card { background-color: #f8f9fa; padding: 20px; border-radius: 10px; border: 1px solid #e9ecef; }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+MODEL = "gemini-1.5-flash"
 REQUEST_TIMEOUT_SECONDS = 60
 MAX_PDF_SIZE_BYTES = 20 * 1024 * 1024
 MAX_PAGES = 15
@@ -24,6 +41,7 @@ MAX_FILES = 25
 MAX_JOB_CHARS = 10_000
 MAX_WORKERS = 3
 logger = logging.getLogger(__name__)
+
 EVALUATION_SCHEMA: dict[str, Any] = {
     "type": "OBJECT",
     "properties": {
@@ -329,13 +347,8 @@ def score_label(score: int, language: str) -> str:
     return f"{score_color(score)} {score}% — {description}"
 
 
-st.set_page_config(
-    page_title="AI CV Screening & Offer Studio",
-    page_icon="🧭",
-    layout="wide",
-)
-
-st.title("🧭 AI-Powered CV Screening & Smart Offers")
+# --- 2. ƏSAS INTERFEYS VƏ SIDEBAR ---
+st.title("🚀 AI-Powered CV Screening & Smart Offers")
 st.caption(
     "Compare candidate experience with your role requirements, then prepare "
     "an offer-letter draft for HR review."
@@ -434,7 +447,7 @@ if screen_button:
         total_candidates = len(seen_candidate_ids)
         completed_count = len(results)
         progress = st.progress(
-            completed_count / total_candidates,
+            completed_count / total_candidates if total_candidates > 0 else 0,
             text=f"Processed {completed_count} of {total_candidates} CVs",
         )
         with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
@@ -490,6 +503,7 @@ results = st.session_state.screening_results
 if results and st.session_state.get("screening_language") != response_language:
     st.info("Screen these CVs again to show results in the selected response language.")
     results = []
+
 if results:
     st.subheader("Candidate leaderboard")
     st.caption("Results show the most recent screening run.")
