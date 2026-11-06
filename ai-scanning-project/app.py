@@ -18,14 +18,15 @@ st.set_page_config(
 )
 
 # CSS dizayn
+# Bu hissəni (st.markdown ilə başlayan yeri) tamamilə sil:
 st.markdown(
-    """
-    <style>
-    h1, h2, h3 { font-family: 'Inter', sans-serif; }
-    .metric-card { background-color: #f8f9fa; padding: 20px; border-radius: 10px; border: 1px solid #e9ecef; }
-    </style>
-    """,
-    unsafe_allow_html=True,
+    """
+    <style>
+    h1, h2, h3 { font-family: 'Inter', sans-serif; }
+    .metric-card { background-color: #f8f9fa; padding: 20px; border-radius: 10px; border: 1px solid #e9ecef; }
+    </style>
+    """,
+    unsafe_allow_html=True,
 )
 
 MODEL = "gemini-3.5-flash-lite"
