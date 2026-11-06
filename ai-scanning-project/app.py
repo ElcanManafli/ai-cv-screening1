@@ -32,8 +32,9 @@ except ImportError:
     HAS_LEGACY_GENAI = False
 
 
-DEFAULT_MODEL = "gemini-3.8-flash"
+DEFAULT_MODEL = "gemini-3.5-flash-lite"
 FALLBACK_MODELS = [
+    "gemini-3.5-flash-lite",
     "gemini-3.8-flash",
     "gemini-2.5-flash",
     "gemini-2.5-flash-lite",
@@ -551,7 +552,7 @@ with st.sidebar:
         "Gemini Model",
         options=FALLBACK_MODELS,
         index=0,
-        help="Automatically falls back to available Gemini Flash models if a model endpoint returns 404.",
+        help="Defaults to gemini-3.5-flash-lite and automatically falls back if a model returns 404.",
     )
     company_name = st.text_input("Company name", placeholder="Your company")
     response_language = st.selectbox(
